@@ -1,6 +1,17 @@
 <<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+Application URL:
+https://job-portal-three-lac.vercel.app/
+ 
+Applicant Login
+Email: test@gmail.com
+Password: Admin@123
+ 
+Recruiter Login
+Email: alpesh.solanki26@gmail.com
+Password: Admin@123
+
 ## Getting Started
 
 First, run the development server:

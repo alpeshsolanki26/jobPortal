@@ -55,8 +55,9 @@ export default function RegisterFormApplicant() {
     try {
       const payload = {
         ...data,
+        skills: data.skills.map((skill) => skill.value),
       };
-
+      console.log("Payload =>", payload);
       const response = await fetch(
         "https://next-training-dev-api.connectid.cloud/auth/signup",
         {

@@ -30,7 +30,11 @@ export default function RegisterFormApplicant() {
         },
       ],
 
-      skills: [""],
+      skills: [
+        {
+          value: "",
+        },
+      ],
 
       resume: "",
       profile: "",
@@ -159,7 +163,7 @@ export default function RegisterFormApplicant() {
             <input
               type="text"
               placeholder={`Skill ${index + 1}`}
-              {...register(`skills.${index}`)}
+              {...register(`skills.${index}.value`)}
               className="border p-2 w-full"
             />
 
@@ -175,7 +179,11 @@ export default function RegisterFormApplicant() {
 
         <button
           type="button"
-          onClick={() => appendSkill("")}
+          onClick={() =>
+            appendSkill({
+              value: "",
+            })
+          }
           className="bg-blue-500 text-white px-4 py-2"
         >
           Add More

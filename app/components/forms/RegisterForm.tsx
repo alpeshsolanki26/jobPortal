@@ -29,7 +29,7 @@ export default function RegisterForm() {
         name: data.name,
         email: data.email,
         password: data.password,
-        type: data.type,
+        type: data.type as "applicant" | "recruiter",
         education: [],
         skills: [],
         rating: 0,

@@ -32,10 +32,12 @@ export const registerApplicantSchema = z.object({
   ),
 
   skills: z.array(
-    z.string().min(1, "Skill cannot be empty")
-  ),
+  z.object({
+    value: z.string().min(1),
+  })
+),
 
-  rating: z.number().default(-1),
+  rating: z.number().optional(),
 
   resume: z.string().optional(),
 

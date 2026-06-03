@@ -85,115 +85,143 @@ export default function RegisterFormApplicant() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* NAME */}
-      <div>
-        <input
-          type="text"
-          placeholder="Name"
-          {...register("name")}
-          className="border p-2 w-full"
-        />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-white rounded-3xl shadow-2xl p-8 md:p-10"
+    >
+      <div className="grid md:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-sm font-medium mb-2">Full Name</label>
 
-        {errors.name && <p>{errors.name.message}</p>}
+          <input
+            type="text"
+            placeholder="John Doe"
+            {...register("name")}
+            className="w-full rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Email</label>
+
+          <input
+            type="email"
+            placeholder="john@example.com"
+            {...register("email")}
+            className="w-full rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Password</label>
+
+          <input
+            type="password"
+            placeholder="********"
+            {...register("password")}
+            className="w-full rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Institution</label>
+
+          <input
+            type="text"
+            placeholder="GTU"
+            {...register("education.0.institutionName")}
+            className="w-full rounded-xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Start Year</label>
+
+          <input
+            type="number"
+            {...register("education.0.startYear", {
+              valueAsNumber: true,
+            })}
+            className="w-full rounded-xl border border-gray-300 p-3"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">End Year</label>
+
+          <input
+            type="number"
+            {...register("education.0.endYear", {
+              valueAsNumber: true,
+            })}
+            className="w-full rounded-xl border border-gray-300 p-3"
+          />
+        </div>
       </div>
 
-      {/* EMAIL */}
-      <div>
-        <input
-          type="email"
-          placeholder="Email"
-          {...register("email")}
-          className="border p-2 w-full"
-        />
+      {/* Skills */}
+      <div className="mt-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold">Skills</h2>
 
-        {errors.email && <p>{errors.email.message}</p>}
+          <button
+            type="button"
+            onClick={() =>
+              appendSkill({
+                value: "",
+              })
+            }
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+          >
+            + Add Skill
+          </button>
+        </div>
+
+        <div className="space-y-3">
+          {skillFields.map((field, index) => (
+            <div key={field.id} className="flex gap-3">
+              <input
+                type="text"
+                placeholder={`Skill ${index + 1}`}
+                {...register(`skills.${index}.value`)}
+                className="flex-1 rounded-xl border border-gray-300 p-3"
+              />
+
+              <button
+                type="button"
+                onClick={() => removeSkill(index)}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 rounded-xl"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* PASSWORD */}
-      <div>
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-          className="border p-2 w-full"
-        />
-
-        {errors.password && <p>{errors.password.message}</p>}
-      </div>
-
-      {/* EDUCATION */}
-      <div>
-        <input
-          type="text"
-          placeholder="Institution Name"
-          {...register("education.0.institutionName")}
-          className="border p-2 w-full"
-        />
-      </div>
-
-      <div>
-        <input
-          type="number"
-          placeholder="Start Year"
-          {...register("education.0.startYear", {
-            valueAsNumber: true,
-          })}
-          className="border p-2 w-full"
-        />
-      </div>
-
-      <div>
-        <input
-          type="number"
-          placeholder="End Year"
-          {...register("education.0.endYear", {
-            valueAsNumber: true,
-          })}
-          className="border p-2 w-full"
-        />
-      </div>
-
-      {/* SKILLS */}
-      <div className="space-y-3">
-        <h2 className="font-bold text-lg">Skills</h2>
-
-        {skillFields.map((field, index) => (
-          <div key={field.id} className="flex gap-2">
-            <input
-              type="text"
-              placeholder={`Skill ${index + 1}`}
-              {...register(`skills.${index}.value`)}
-              className="border p-2 w-full"
-            />
-
-            <button
-              type="button"
-              onClick={() => removeSkill(index)}
-              className="bg-red-500 text-white px-3"
-            >
-              Remove
-            </button>
-          </div>
-        ))}
-
+      {/* Submit */}
+      <div className="mt-10">
         <button
-          type="button"
-          onClick={() =>
-            appendSkill({
-              value: "",
-            })
-          }
-          className="bg-blue-500 text-white px-4 py-2"
+          type="submit"
+          className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 rounded-xl transition"
         >
-          Add More
+          Register Applicant
         </button>
       </div>
-
-      {/* SUBMIT */}
-      <button type="submit" className="bg-black text-white px-4 py-2">
-        Register Applicant
-      </button>
     </form>
   );
 }
